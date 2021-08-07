@@ -66,9 +66,9 @@ def passo4e():
 
 
 def passo7():
-    answerEpsilon = None
-    answerLearningRate = None
-    return answerEpsilon, answerLearningRate
+    answerEpsilon = 0.9999
+    answerLearningRate = 0.4
+    return 'NOT POSSIBLE'
     # If not possible, return 'NOT POSSIBLE'
 
 
