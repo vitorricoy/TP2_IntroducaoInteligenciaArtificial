@@ -46,7 +46,20 @@ class ValueIterationAgent(ValueEstimationAgent):
         self.values = util.Counter()  # A Counter is a dict with default 0
 
         # Write value iteration code here
-        "*** YOUR CODE HERE ***"
+
+        estados = mdp.getStates()
+        for i in range(iterations):
+            tempValues = self.values.copy()
+            for estado in estados:
+                acoes = mdp.getPossibleActions(estado)
+                valores = [-float('inf')]
+                for acao in acoes:
+                    valores.append(self.getQValue(estado, acao))
+                maior = max(valores)
+                if maior == -float('inf'):
+                    maior = 0
+                tempValues[estado] = maior
+            self.values = tempValues
 
     def getValue(self, state):
         """
@@ -59,8 +72,12 @@ class ValueIterationAgent(ValueEstimationAgent):
           Compute the Q-value of action in state from the
           value function stored in self.values.
         """
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        transicoes = self.mdp.getTransitionStatesAndProbs(state, action)
+        valorQ = 0
+        for estadoDest, prob in transicoes:
+            recompensa = self.mdp.getReward(state, action, estadoDest)
+            valorQ += prob * (recompensa + self.discount * self.values[estadoDest])
+        return valorQ
 
     def computeActionFromValues(self, state):
         """
@@ -71,8 +88,11 @@ class ValueIterationAgent(ValueEstimationAgent):
           there are no legal actions, which is the case at the
           terminal state, you should return None.
         """
-        "*** YOUR CODE HERE ***"
-        util.raiseNotDefined()
+        acoes = self.mdp.getPossibleActions(state)
+        valores = [(-float('inf'), None)]
+        for acao in acoes:
+            valores.append((self.getQValue(state, acao), acao))
+        return max(valores)[1]
 
     def getPolicy(self, state):
         return self.computeActionFromValues(state)
