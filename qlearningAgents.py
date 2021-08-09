@@ -186,24 +186,27 @@ class ApproximateQAgent(PacmanQAgent):
         for nomeCarac in carac:
           val+=carac[nomeCarac]*self.getWeights()[nomeCarac]
         return val
-
+        
     def update(self, state, action, nextState, reward):
         """
            Should update your weights based on transition
         """
         carac = self.featExtractor.getFeatures(state, action)
-        acoesProx = self.computeActionFromQValues(nextState)
+
+        # Calcula o valor de V(s')
+        acoesProx = self.getLegalActions(nextState)
         # Se nextState eh terminal
-        if acoesProx == None:
+        if len(acoesProx) == 0:
           valorSl = 0
         else:
           valores = []
           for acaoProx in acoesProx:
             valores.append(self.getQValue(nextState, acaoProx))
           valorSl = max(valores)
-          
+        
+        # Atualiza os pesos
         qValue = self.getQValue(state, action)
-        alteracao = self.alpha*(reward + self.discount*self.getValue(nextState)-qValue)
+        alteracao = self.alpha*(reward + self.discount*valorSl-qValue)
         for nomeCarac in carac:
           self.getWeights()[nomeCarac] += alteracao
 
