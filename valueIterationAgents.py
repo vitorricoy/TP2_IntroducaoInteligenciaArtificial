@@ -76,7 +76,7 @@ class ValueIterationAgent(ValueEstimationAgent):
         valorQ = 0
         for estadoDest, prob in transicoes:
             recompensa = self.mdp.getReward(state, action, estadoDest)
-            valorQ += prob * (recompensa + self.discount * self.values[estadoDest])
+            valorQ += prob * (recompensa + self.discount * self.getValue(estadoDest))
         return valorQ
 
     def computeActionFromValues(self, state):
