@@ -60,6 +60,7 @@ class QLearningAgent(ReinforcementAgent):
           there are no legal actions, which is the case at the
           terminal state, you should return a value of 0.0.
         """
+        # Calcula o valor de acordo com a fórmula dada
         acoes = self.getLegalActions(state) 
         if len(acoes) == 0:
           return 0.0
@@ -74,9 +75,11 @@ class QLearningAgent(ReinforcementAgent):
           are no legal actions, which is the case at the terminal state,
           you should return None.
         """
+        # Salva as ações
         acoes = self.getLegalActions(state) 
         if len(acoes) == 0:
           return None
+        # Escolhe a ação de maior Q-Value
         valores = []
         for acao in acoes:
           valores.append((self.getQValue(state, acao), acao))
@@ -97,6 +100,7 @@ class QLearningAgent(ReinforcementAgent):
         legalActions = self.getLegalActions(state)
         action = None
         
+        # Escolhe a ação com a probabilidade correta
         if len(legalActions) == 0:
           return action
         
@@ -116,6 +120,7 @@ class QLearningAgent(ReinforcementAgent):
           NOTE: You should never call this function,
           it will be called on your behalf
         """
+        # Calcula o update de acordo com a fórmula dada
         qValue = self.qValues[(state, action)]
         valueNextState = self.computeValueFromQValues(nextState)
         qValue += self.alpha*(reward + self.discount*valueNextState-qValue)
@@ -181,6 +186,7 @@ class ApproximateQAgent(PacmanQAgent):
           Should return Q(state,action) = w * featureVector
           where * is the dotProduct operator
         """
+        # Calcula o valor de acordo com a fórmula dada
         carac = self.featExtractor.getFeatures(state, action)
         val = 0
         for nomeCarac in carac:
