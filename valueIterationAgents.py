@@ -50,10 +50,10 @@ class ValueIterationAgent(ValueEstimationAgent):
         # Salva os estados
         estados = mdp.getStates()
         for i in range(iterations):
-            # Salva um dicionário temporário
-            # Isso é feito para o cálculo usar o dicionário da iteração anterior
+            # Salva um dicionario temporario
+            # Isso eh feito para o calculo usar o dicionario da iteracao anterior
             tempValues = self.values.copy()
-            # Calcula o valor de acordo com a fórmula apresentada em aula
+            # Calcula o valor de acordo com a formula apresentada em aula
             for estado in estados:
                 acoes = mdp.getPossibleActions(estado)
                 valores = [-float('inf')]
@@ -76,9 +76,9 @@ class ValueIterationAgent(ValueEstimationAgent):
           Compute the Q-value of action in state from the
           value function stored in self.values.
         """
-        # Salva as transições
+        # Salva as transicoes
         transicoes = self.mdp.getTransitionStatesAndProbs(state, action)
-        # Calcula o valor de acordo com as fórmulas apresentadas em aula
+        # Calcula o valor de acordo com as formulas apresentadas em aula
         valorQ = 0
         for estadoDest, prob in transicoes:
             recompensa = self.mdp.getReward(state, action, estadoDest)
@@ -94,9 +94,9 @@ class ValueIterationAgent(ValueEstimationAgent):
           there are no legal actions, which is the case at the
           terminal state, you should return None.
         """
-        # Salva as ações
+        # Salva as acoes
         acoes = self.mdp.getPossibleActions(state)
-        # Escolhe a ação com o maior Q-Value
+        # Escolhe a acao com o maior Q-Value
         valores = [(-float('inf'), None)]
         for acao in acoes:
             valores.append((self.getQValue(state, acao), acao))
